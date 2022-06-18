@@ -99,6 +99,15 @@ test_that("nesting no columns nests all inputs", {
   expect_equal(out$data[[1]], df)
 })
 
+# is_nest ---------------------------------------------------------------
+
+test_that("is_nest", {
+  expect_false(is_nest(iris))
+  expect_true(is_nest(nest(iris, data = everything())))
+  expect_false(is_nest(NULL))
+  expect_true(is_nest(nest(dplyr::group_by(iris, Species))))
+})
+
 # unnest ------------------------------------------------------------------
 
 test_that("can keep empty rows", {

@@ -197,6 +197,23 @@ nest.grouped_df <- function(.data, ..., .names_sep = NULL, .key = deprecated()) 
   }
 }
 
+#' Test if the object was nesting
+#'
+#' This function returns `TRUE` for if a nestable object is nesting
+#'
+#' @param x An object
+#' @return `TRUE` if the object inherits from the `tbl_df` class and any columns are a list.
+#' @export
+is_nest <- function(x) {
+  # check if x is nestable
+  if (!inherits(x, "tbl_df")) {
+    return(FALSE)
+  }
+  # get class by columns
+  class_by_col <- purrr::map_chr(x, class)
+  return(any(class_by_col == "list"))
+}
+
 check_key <- function(.key) {
   if (!is_missing(.key)) {
     warn("`.key` is deprecated")
